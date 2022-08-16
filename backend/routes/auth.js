@@ -65,6 +65,47 @@ router.post(
   }
 );
 
+
+
+//now create login authenticte using POST 'localhost:5000/api/auth/login'  , no login required
+router.post(
+    "/login",
+    [
+      body("email","Enter a valid email").isEmail(),
+      body("password","Password cannot be blank").exists(),
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        } 
+        //destructuring 
+        const {email,password} = req.body;
+        try {
+            let user = await User.findOne({email});
+            if(!user){
+                return res.status(400).json({error: 'Please try to login with correct credentials'})
+            }
+            //bcrypt compare return true and false and compare given and existing password and it is async function
+            const passwordCompare = await bcrypt.compare(password, user.password)
+            if(!passwordCompare){
+                return res.status(400).json({error: 'Please try to login with correct credentials'}) 
+            }
+            //sending the payload
+            const data = {
+                user:{
+                    id:user.id
+                }
+              }
+              const authToken = jwt.sign(data, JWT_SECRET);
+              res.json({authToken});
+
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Server Error Occured");   
+        }
+    })
+  
 module.exports = router;
 //install jason web token
 //install bcryptjs
