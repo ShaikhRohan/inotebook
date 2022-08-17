@@ -1,11 +1,16 @@
 const express = require("express");
 const router = express.Router();
+//schema
 const User = require("../models/User");
+//npm express validator
 const { body, validationResult } = require("express-validator");
+//is use to convert password into salt hash
 const bcrypt = require('bcryptjs');
+//jwt is used to create a token
 const jwt = require('jsonwebtoken');
 const fetchuser = require('../middleware/fetchuser');
-//Route 1: create a user usig Post "/api/auth/createuser" does not require authentication
+//Route 1: create a user using Post "/api/auth/createuser" does not require authentication
+//secret key must be in the .env.local file
 const JWT_SECRET = 'shaikhrohan@3d'
 router.post(
   "/createuser",
@@ -59,13 +64,15 @@ router.post(
       //console.log(jwtData);
       //res.json(user);
       res.json({authToken});
-    } catch (error) {
+    }
+    //try end
+    catch (error) {
       console.error(error.message);
       res.status(500).send("some error occured");
     }
   }
 );
-
+//end Route:1
 
 
 //Route 2: now create login authenticte using POST 'localhost:5000/api/auth/login'  , no login required
@@ -84,11 +91,13 @@ router.post(
         const {email,password} = req.body;
         try {
             let user = await User.findOne({email});
+           //email verification
             if(!user){
                 return res.status(400).json({error: 'Please try to login with correct credentials'})
             }
             //bcrypt compare return true and false and compare given and existing password and it is async function
             const passwordCompare = await bcrypt.compare(password, user.password)
+            //password verification
             if(!passwordCompare){
                 return res.status(400).json({error: 'Please try to login with correct credentials'}) 
             }
