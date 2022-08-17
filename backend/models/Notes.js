@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const NotedSchema = new Schema({
+const NotesSchema = new Schema({
+   //we add user as a foreign key by which it only get the notes realted to the particular id
+   user:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user'
+   },
    title:{
     type: String,
     required: true
@@ -19,4 +24,4 @@ const NotedSchema = new Schema({
    }
   });
 
-  module.exports = mongoose.model('notes',NotesSchema);
+  module.exports = mongoose.model('notes', NotesSchema);

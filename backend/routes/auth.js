@@ -107,7 +107,7 @@ router.post(
         }
     })
  
-    //Route 2: Get logged in user detail using : POST 'localhost:5000/api/auth/getuser' login is required 
+    //Route 3: Get logged in user detail using : POST 'localhost:5000/api/auth/getuser' login is required 
    //to maintain scalablity we add middleware by which we only have to add middleware and go on....
     router.post(
       "/getuser", fetchuser ,async (req, res) => {
