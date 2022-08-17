@@ -4,7 +4,8 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-//create a user usig Post "/api/auth/createuser" does not require authentication
+const fetchuser = require('../middleware/fetchuser');
+//Route 1: create a user usig Post "/api/auth/createuser" does not require authentication
 const JWT_SECRET = 'shaikhrohan@3d'
 router.post(
   "/createuser",
@@ -67,7 +68,7 @@ router.post(
 
 
 
-//now create login authenticte using POST 'localhost:5000/api/auth/login'  , no login required
+//Route 2: now create login authenticte using POST 'localhost:5000/api/auth/login'  , no login required
 router.post(
     "/login",
     [
@@ -105,7 +106,20 @@ router.post(
             res.status(500).send("Internal Server Error Occured");   
         }
     })
-  
+ 
+    //Route 2: Get logged in user detail using : POST 'localhost:5000/api/auth/getuser' login is required 
+   //to maintain scalablity we add middleware by which we only have to add middleware and go on....
+    router.post(
+      "/getuser", fetchuser ,async (req, res) => {
+    try {
+      userid = req.user.id;
+      const user = await User.findById(userid).select('-password');
+      res.send(user);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Logged in error occured');
+    } 
+  })
 module.exports = router;
 //install jason web token
 //install bcryptjs
