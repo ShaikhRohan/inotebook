@@ -1,11 +1,15 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React, {useEffect} from "react";
+import {Link, useLocation} from 'react-router-dom'
 const Navbar = () => {
+  let location = useLocation();
+  useEffect(() => {
+   //console.log(location.pathname);
+  }, [location])
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-dark">
+      <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand text-light" to="/">
+          <Link className="navbar-brand " to="/">
             iNoteBook
           </Link>
           <button
@@ -23,7 +27,7 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link active text-light"
+                  className={`nav-link ${location.pathname==='/home'?'active':''}`}
                   aria-current="page"
                   to="/home"
                 >
@@ -31,40 +35,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link text-light" to="/about">
+                <Link className={`nav-link ${location.pathname==='/about'? 'active': ''}`} to="/about">
                   About Us
                 </Link>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle text-light"
-                  href="/"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu text-light">
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="/">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
               </li>
             </ul>
             <form className="d-flex" role="search">
