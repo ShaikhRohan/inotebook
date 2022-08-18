@@ -28,7 +28,10 @@ const NoteState = (props) => {
         "date": "2022-08-17T17:43:40.136Z",
         "__v": 0
       
-    }]
+    }
+    
+  
+  ]
     const [notes, setNotes] = useState(initialNotes)
   return (
     <div>
