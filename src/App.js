@@ -4,12 +4,14 @@ import Navbar from './components/navbar/Navbar';
 import {BrowserRouter as Router ,Routes, Route} from 'react-router-dom'
 import About from './components/about/About';
 import NoteState from './context/NoteState';
+import Alert from './components/alert/Alert';
 function App() {
   return (
     <>
     <NoteState>
   <Router>
     <Navbar></Navbar>
+    <Alert message={'Shaikh Rohan never back for anything'}></Alert>
     <div className='container'>
     <Routes>
       <Route exact path='/' element={<Home></Home>}></Route>
