@@ -5,15 +5,21 @@ import NoteItem from "../noteitem/NoteItem";
 
 const Notes = (props) => {
   const context = useContext(noteContext);
-  const { notes, getNotes } = context;
+  const { notes, getNotes, editNote  } = context;
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line
   }, []);
-  const [note, setNote] = useState({etitle :'', edescription: '', etag: ''});
+  const [note, setNote] = useState({id: '',etitle :'', edescription: '', etag: ''});
   const handleClick=(e)=>{
     //preventDefault did not allow to reload the page
     e.preventDefault();
+    try {
+      editNote(note.id,note.etitle, note.edescription, note.etag);
+    } catch (error) {
+      console.log(error);
+    }
+    refClose.current.click();
     //  addNote(note.etitle,note.edescription,note.etag);
   
 }
@@ -23,11 +29,13 @@ const onChange=(e)=>{
     setNote({...note, [e.target.name] : e.target.value})
 }
   const ref = useRef(null);
+  const refClose = useRef(null);
   const updateNote = (currentNote) => {
     // ref.toggle();
     ref.current.click();
     //setNote(currentNote);
-    setNote({etitle : currentNote.title , edescription : currentNote.description, etag: currentNote.tag})
+   
+    setNote({id: currentNote._id ,etitle : currentNote.title , edescription : currentNote.description, etag: currentNote.tag})
   };
   return (
     <>
@@ -60,7 +68,7 @@ const onChange=(e)=>{
       </form>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" onClick={handleClick} className="btn btn-primary">Update Changes</button>
       </div>
     </div>
