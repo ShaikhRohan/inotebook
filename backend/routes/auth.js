@@ -35,7 +35,8 @@ router.post(
     try {
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        return res.status(400).json({ error: "This email is already taken" });
+        success = false;
+        return res.status(400).json({ success,error: "This email is already taken" });
       }
       //create salt using bcryptjs
       const salt = await bcrypt.genSalt(10)
@@ -63,8 +64,8 @@ router.post(
       const authToken = jwt.sign(data, JWT_SECRET);
       //console.log(jwtData);
       //res.json(user);
-      
-      res.json({authToken});
+      success = true
+      res.json({success, authToken});
     }
     //try end
     catch (error) {
