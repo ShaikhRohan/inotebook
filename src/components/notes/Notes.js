@@ -59,23 +59,26 @@ const onChange=(e)=>{
         </div>
         <div className="mb-3">
           <label htmlFor="edescription" className="form-label">Description</label>
-          <input type="text" onChange={onChange} value={note.edescription}  className="form-control" id="edescription" name='edescription' />
+          <input type="text" onChange={onChange} value={note.edescription}  required  className="form-control" id="edescription" name='edescription' />
         </div>
         <div className="mb-3">
           <label htmlFor="etag" className="form-label">Tag</label>
-          <input type="text" value={note.etag} onChange={onChange}  className="form-control" id="etag" name='etag' />
+          <input type="text" value={note.etag} onChange={onChange} required  className="form-control" id="etag" name='etag' />
         </div>
       </form>
       </div>
       <div className="modal-footer">
         <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" onClick={handleClick} className="btn btn-primary">Update Changes</button>
+        <button type="button" disabled={note.etitle.length<5 || note.edescription.length<5} onClick={handleClick} className="btn btn-primary">Update Changes</button>
       </div>
     </div>
   </div>
 </div>
       <div className="row my-3">
-        <h2>Your Note</h2>
+        <h2 className="mx-1">Your Note</h2>
+        <div className="container mx-2">
+        {notes.length === 0 && 'No Note Available'}
+        </div>
         {notes.map((note) => {
           return (
             <NoteItem

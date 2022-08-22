@@ -9,6 +9,7 @@ const AddNote = () => {
         //preventDefault did not allow to reload the page
         e.preventDefault();
         addNote(note.title,note.description,note.tag);
+        setNote({title :'', description: '', tag: ''})
       
     }
     //e is representing an event
@@ -23,19 +24,19 @@ const AddNote = () => {
       <form className='my-3'>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">Title</label>
-          <input type="text" onChange={onChange} className="form-control" id="title" name='title' aria-describedby="emailHelp" />
+          <input type="text" onChange={onChange} className="form-control" value={note.title} id="title" name='title' aria-describedby="emailHelp" />
           {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">Description</label>
-          <input type="text" onChange={onChange}  className="form-control" id="description" name='description' />
+          <input type="text" onChange={onChange} required className="form-control" value={note.description} id="description" name='description' />
         </div>
         <div className="mb-3">
           <label htmlFor="tag" className="form-label">Tag</label>
-          <input type="text" onChange={onChange}  className="form-control" id="tag" name='tag' />
+          <input type="text" onChange={onChange} required className="form-control" value={note.tag} id="tag" name='tag' />
         </div>
 
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Add New Note</button>
+        <button type="submit" disabled={note.title.length<5 || note.description.length<5 } className="btn btn-primary" onClick={handleClick}>Add New Note</button>
       </form>
       {/*  */}
    {/* <Notes></Notes> */}

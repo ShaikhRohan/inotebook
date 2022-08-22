@@ -86,7 +86,7 @@ const NoteState = (props) => {
         },
         body: JSON.stringify({title,description,tag}) 
       });
-       const json = response.json();
+       const json = await response.json();
        console.log(json);
       //addNote logic
       // const note = {
@@ -100,7 +100,8 @@ const NoteState = (props) => {
       // }
       //setNotes(notes.push(note))
       //concat return new array
-      setNotes(notes.concat({title,description,tag}));
+      //setNotes(notes.concat({title,description,tag}));
+      setNotes(notes.concat(json));
     }
     //delete a note 
     const deleteNote = async (id)=>{
