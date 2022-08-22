@@ -41,15 +41,17 @@ const Navbar = () => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <input
+              {/* <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
+              /> */}
+              {/* <button className="btn btn-outline-success" type="submit">
                 Search
-              </button>
+              </button> */}
+              <Link className={`btn btn-primary mx-1 ${location.pathname === '/login'? 'active': ''} `} to='/login' role="button">Login</Link>
+              <Link className={`btn btn-primary ${location.pathname === '/signup'? 'active': ''} `}  to='/signup' role="button">Signup</Link>
             </form>
           </div>
         </div>

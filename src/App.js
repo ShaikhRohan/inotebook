@@ -5,6 +5,8 @@ import {BrowserRouter as Router ,Routes, Route} from 'react-router-dom'
 import About from './components/about/About';
 import NoteState from './context/NoteState';
 import Alert from './components/alert/Alert';
+import Login from './components/login/Login';
+import Signup from './components/signup/Signup';
 function App() {
   return (
     <>
@@ -17,6 +19,8 @@ function App() {
       <Route exact path='/' element={<Home></Home>}></Route>
       <Route exact path='/home' element={<Home></Home>}></Route>
       <Route exact path='/about' element={<About></About>}></Route>
+      <Route exact path='/login' element={<Login></Login>}></Route>
+      <Route exact path='/signup' element={<Signup></Signup>}></Route>
     </Routes>
     </div>
     </Router>

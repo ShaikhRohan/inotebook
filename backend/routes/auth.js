@@ -63,6 +63,7 @@ router.post(
       const authToken = jwt.sign(data, JWT_SECRET);
       //console.log(jwtData);
       //res.json(user);
+      
       res.json({authToken});
     }
     //try end
@@ -93,22 +94,27 @@ router.post(
             let user = await User.findOne({email});
            //email verification
             if(!user){
-                return res.status(400).json({error: 'Please try to login with correct credentials'})
-            }
+              success = false;
+                return res.status(400).json({success , error: 'Please try to login with correct credentials'})
+           
+              }
             //bcrypt compare return true and false and compare given and existing password and it is async function
             const passwordCompare = await bcrypt.compare(password, user.password)
             //password verification
             if(!passwordCompare){
-                return res.status(400).json({error: 'Please try to login with correct credentials'}) 
-            }
+              success = false;
+                return res.status(400).json({success, error: 'Please try to login with correct credentials'}) 
+            
+              }
             //sending the payload
             const data = {
                 user:{
                     id:user.id
                 }
               }
+              success = true;
               const authToken = jwt.sign(data, JWT_SECRET);
-              res.json({authToken});
+              res.json({success,authToken});
 
         } catch (error) {
             console.error(error.message);
