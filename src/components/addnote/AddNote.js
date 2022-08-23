@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import noteContext from '../../context/noteContext';
-const AddNote = () => {
+const AddNote = (props) => {
     const context = useContext(noteContext);
     //add a state hook for onChange function
     const [note, setNote] = useState({title :'', description: '', tag: ''});
@@ -9,7 +9,9 @@ const AddNote = () => {
         //preventDefault did not allow to reload the page
         e.preventDefault();
         addNote(note.title,note.description,note.tag);
+        props.showAlert(' Note Added', 'success');
         setNote({title :'', description: '', tag: ''})
+        
       
     }
     //e is representing an event
